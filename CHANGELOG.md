@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.2
+
+- Rendered the main HUD and FPS/Ping screenshots at their native size on Thunderstore to avoid blurry upscaling.
+- No gameplay or HUD behavior changes.
+
 ## 0.5.1
 
 - Fixed README image links so screenshots and the project icon render correctly on Thunderstore.

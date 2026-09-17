@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.1
+
+- Fixed README image links so screenshots and the project icon render correctly on Thunderstore.
+- No gameplay or HUD behavior changes.
+
 ## 0.5.0
 
 - Added a standalone Inject0r HUD localization framework.

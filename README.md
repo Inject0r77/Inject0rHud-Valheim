@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-0.5.3-7c5cff?style=flat-square" alt="Version 0.5.3">
+  <img src="https://img.shields.io/badge/version-0.5.4-7c5cff?style=flat-square" alt="Version 0.5.4">
   <img src="https://img.shields.io/badge/game-Valheim-4c8eda?style=flat-square" alt="Valheim">
   <img src="https://img.shields.io/badge/BepInEx-5.4.2350-3fb950?style=flat-square" alt="BepInEx 5.4.2350">
   <img src="https://img.shields.io/badge/type-client--side-2ea043?style=flat-square" alt="Client-side">
@@ -42,10 +42,9 @@ Everything is client-side. A normal server does not need Inject0r HUD installed.
 
 ### HUD
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/Inject0r77/Inject0rHud-Valheim/main/assets/screenshots/hud-main-hq.webp" alt="Inject0r HUD timers and durability" width="48%">
-  <img src="https://raw.githubusercontent.com/Inject0r77/Inject0rHud-Valheim/main/assets/screenshots/hud-fps-ping-hq.webp" alt="Inject0r HUD FPS and Ping widgets" width="32%">
-</p>
+![Inject0r HUD timers and durability](https://raw.githubusercontent.com/Inject0r77/Inject0rHud-Valheim/main/assets/screenshots/hud-main-ts.jpg)
+
+![Inject0r HUD FPS and Ping widgets](https://raw.githubusercontent.com/Inject0r77/Inject0rHud-Valheim/main/assets/screenshots/hud-fps-ping-ts.jpg)
 
 ### Settings
 
@@ -129,7 +128,7 @@ You can also:
 
 Inject0r HUD has its own interface language setting.
 
-Supported in `0.5.3`:
+Supported in `0.5.4`:
 
 - **English** — default;
 - **Русский**;

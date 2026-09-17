@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.3
+
+- Switched HUD screenshots in the packaged README to optimized high-resolution WebP assets so they render correctly on Thunderstore.
+- Kept the large PNG sources out of the README path to avoid broken/failed image loading on Thunderstore.
+- No gameplay or HUD behavior changes.
+
 ## 0.5.2
 
 - Rendered the main HUD and FPS/Ping screenshots at their native size on Thunderstore to avoid blurry upscaling.

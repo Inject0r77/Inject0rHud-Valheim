@@ -4,7 +4,7 @@ schemaVersion = "0.0.1"
 [package]
 namespace = "Inject0r77"
 name = "Inject0rHUD"
-versionNumber = "0.5.3"
+versionNumber = "0.5.4"
 description = "Client-side Valheim HUD with production hover timers, positive-effect timers, profiles, durability, FPS/Ping widgets and EN/RU/KK/ZH-CN interface localization."
 websiteUrl = "https://github.com/Inject0r77/Inject0rHud-Valheim"
 containsNsfwContent = false

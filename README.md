@@ -43,8 +43,8 @@ Everything is client-side. A normal server does not need Inject0r HUD installed.
 ### HUD
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Inject0r77/Inject0rHud-Valheim/main/assets/screenshots/hud-main.webp" alt="Inject0r HUD timers and durability" width="48%">
-  <img src="https://raw.githubusercontent.com/Inject0r77/Inject0rHud-Valheim/main/assets/screenshots/hud-fps-ping.webp" alt="Inject0r HUD FPS and Ping widgets" width="32%">
+  <img src="https://raw.githubusercontent.com/Inject0r77/Inject0rHud-Valheim/main/assets/screenshots/hud-main.webp" alt="Inject0r HUD timers and durability" width="267">
+  <img src="https://raw.githubusercontent.com/Inject0r77/Inject0rHud-Valheim/main/assets/screenshots/hud-fps-ping.webp" alt="Inject0r HUD FPS and Ping widgets" width="162">
 </p>
 
 ### Settings

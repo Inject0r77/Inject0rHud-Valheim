@@ -10,7 +10,6 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-0.5.5-7c5cff?style=flat-square" alt="Version 0.5.5">
   <img src="https://img.shields.io/badge/game-Valheim-4c8eda?style=flat-square" alt="Valheim">
   <img src="https://img.shields.io/badge/BepInEx-5.4.2350-3fb950?style=flat-square" alt="BepInEx 5.4.2350">
   <img src="https://img.shields.io/badge/type-client--side-2ea043?style=flat-square" alt="Client-side">

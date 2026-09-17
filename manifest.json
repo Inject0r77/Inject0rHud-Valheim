@@ -1,0 +1,9 @@
+{
+  "name": "Inject0rHUD",
+  "version_number": "0.5.0",
+  "website_url": "https://github.com/Inject0r77/Inject0rHud-Valheim",
+  "description": "Client-side Valheim HUD with production hover timers, positive-effect timers, profiles, durability, FPS/Ping widgets and EN/RU/KK/ZH-CN interface localization.",
+  "dependencies": [
+    "denikson-BepInExPack_Valheim-5.4.2350"
+  ]
+}

@@ -1,0 +1,56 @@
+Inject0r HUD Source Available License v1.0
+
+Copyright (c) 2026 Inject0r77. All rights reserved.
+
+This license applies to Inject0r HUD source code, documentation, original project assets, and compiled releases (collectively, the "Software") to the extent that copyright or other applicable rights subsist in them and are owned or controlled by Inject0r77.
+
+1. Permission granted
+
+You may, without charge:
+
+- download and use official compiled releases of the Software for personal, non-commercial use;
+- view and study the publicly available source code;
+- compile the Software for your own personal, non-commercial use;
+- modify your own local copy for personal, non-commercial use;
+- submit bug reports, suggestions, patches, or pull requests to the official Inject0r HUD repository.
+
+2. Permission not granted
+
+Unless you have prior written permission from Inject0r77, you may not:
+
+- redistribute, rehost, mirror, republish, sublicense, sell, rent, or otherwise distribute the Software or substantial portions of it;
+- publish or distribute modified versions, forks, ports, derivative works, or builds based on the Software;
+- copy substantial portions of the source code into another project;
+- use the Software, its source code, or substantial portions of it in a commercial product or paid service;
+- upload the Software or a modified version to Thunderstore, Nexus Mods, GitHub Releases, another mod repository, package index, file host, or similar distribution service;
+- remove, obscure, or alter copyright, authorship, attribution, or license notices;
+- use the Inject0r HUD name, logo, branding, screenshots, or other original project assets in a way that falsely suggests that another project, release, or service is official, endorsed, or affiliated with Inject0r77.
+
+3. GitHub forks and contributions
+
+A fork created using GitHub's built-in functionality may be used only as reasonably necessary to inspect the source, prepare changes, or submit a pull request back to the official repository. This does not grant permission to publish or distribute the fork as a separate mod, product, or release.
+
+By submitting a contribution to the official repository, you represent that you have the right to submit it and grant Inject0r77 a perpetual, worldwide, non-exclusive, royalty-free, irrevocable license to use, reproduce, modify, adapt, distribute, sublicense, and relicense that contribution as part of Inject0r HUD and related project releases.
+
+4. Third-party material
+
+This license does not grant rights in Valheim, BepInEx, Unity, or any other third-party software, trademarks, artwork, game content, libraries, or assets. Such material remains subject to the rights and licenses of its respective owners.
+
+5. No warranty
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT. TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE COPYRIGHT HOLDER SHALL NOT BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM OR RELATED TO THE SOFTWARE OR ITS USE.
+
+6. Termination
+
+Any permission granted by this license terminates automatically if you materially violate its terms. Termination does not limit any other rights or remedies available to the copyright holder.
+
+7. Enforcement and copyright notices
+
+Unauthorized copying or distribution may constitute copyright infringement. Nothing in this license limits the copyright holder's ability to use lawful reporting, takedown, platform-enforcement, or legal processes where applicable.
+
+8. Earlier versions
+
+This license applies to versions and revisions first published under it. It does not retroactively revoke permissions that were validly granted for earlier versions under a different license.
+
+For redistribution, commercial use, ports, bundled releases, or other permissions not granted above, contact the project owner through the official repository:
+https://github.com/Inject0r77/Inject0rHud-Valheim

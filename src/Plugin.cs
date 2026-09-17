@@ -19,7 +19,7 @@ namespace Inject0rHUD
     {
         public const string PluginGuid = "inject0r.Inject0rHUD";
         public const string PluginName = "Inject0r HUD";
-        public const string PluginVersion = "0.5.5";
+        public const string PluginVersion = "0.5.6";
 
         internal static ManualLogSource Log;
         internal static bool IsEditModeActive { get; private set; }

@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Inject0r77/Inject0rHud-Valheim/main/icon.png" alt="Inject0r HUD logo" width="128" height="128">
+  <img src="https://cdn.jsdelivr.net/gh/Inject0r77/Inject0rHud-Valheim@main/icon.png" alt="Inject0r HUD logo" width="128" height="128">
 </p>
 
 <h1 align="center">Inject0r HUD</h1>
@@ -42,22 +42,22 @@ Everything is client-side. A normal server does not need Inject0r HUD installed.
 
 ### HUD
 
-![Inject0r HUD timers and durability](https://raw.githubusercontent.com/Inject0r77/Inject0rHud-Valheim/main/assets/screenshots/hud-main-ts.jpg)
+![Inject0r HUD timers and durability](https://cdn.jsdelivr.net/gh/Inject0r77/Inject0rHud-Valheim@main/assets/screenshots/hud-main-ts.jpg)
 
-![Inject0r HUD FPS and Ping widgets](https://raw.githubusercontent.com/Inject0r77/Inject0rHud-Valheim/main/assets/screenshots/hud-fps-ping-ts.jpg)
+![Inject0r HUD FPS and Ping widgets](https://cdn.jsdelivr.net/gh/Inject0r77/Inject0rHud-Valheim@main/assets/screenshots/hud-fps-ping-ts.jpg)
 
 ### Settings
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Inject0r77/Inject0rHud-Valheim/main/assets/screenshots/settings-layout.webp" alt="Layout settings" width="31%">
-  <img src="https://raw.githubusercontent.com/Inject0r77/Inject0rHud-Valheim/main/assets/screenshots/settings-durability.webp" alt="Durability settings" width="31%">
-  <img src="https://raw.githubusercontent.com/Inject0r77/Inject0rHud-Valheim/main/assets/screenshots/settings-widgets.webp" alt="Widget settings" width="31%">
+  <img src="https://cdn.jsdelivr.net/gh/Inject0r77/Inject0rHud-Valheim@main/assets/screenshots/settings-layout.webp" alt="Layout settings" width="31%">
+  <img src="https://cdn.jsdelivr.net/gh/Inject0r77/Inject0rHud-Valheim@main/assets/screenshots/settings-durability.webp" alt="Durability settings" width="31%">
+  <img src="https://cdn.jsdelivr.net/gh/Inject0r77/Inject0rHud-Valheim@main/assets/screenshots/settings-widgets.webp" alt="Widget settings" width="31%">
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Inject0r77/Inject0rHud-Valheim/main/assets/screenshots/settings-profiles.webp" alt="Profile settings" width="31%">
-  <img src="https://raw.githubusercontent.com/Inject0r77/Inject0rHud-Valheim/main/assets/screenshots/settings-diagnostics.webp" alt="Diagnostics" width="31%">
-  <img src="https://raw.githubusercontent.com/Inject0r77/Inject0rHud-Valheim/main/assets/screenshots/settings-language.webp" alt="Language settings" width="31%">
+  <img src="https://cdn.jsdelivr.net/gh/Inject0r77/Inject0rHud-Valheim@main/assets/screenshots/settings-profiles.webp" alt="Profile settings" width="31%">
+  <img src="https://cdn.jsdelivr.net/gh/Inject0r77/Inject0rHud-Valheim@main/assets/screenshots/settings-diagnostics.webp" alt="Diagnostics" width="31%">
+  <img src="https://cdn.jsdelivr.net/gh/Inject0r77/Inject0rHud-Valheim@main/assets/screenshots/settings-language.webp" alt="Language settings" width="31%">
 </p>
 
 ---

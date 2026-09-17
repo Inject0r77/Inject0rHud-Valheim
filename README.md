@@ -128,7 +128,7 @@ You can also:
 
 Inject0r HUD has its own interface language setting.
 
-Supported in `0.5.5`:
+Supported languages:
 
 - **English** — default;
 - **Русский**;

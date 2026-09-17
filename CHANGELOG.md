@@ -1,21 +1,5 @@
 # Changelog
 
-## 0.5.3
-
-- Switched HUD screenshots in the packaged README to optimized high-resolution WebP assets so they render correctly on Thunderstore.
-- Kept the large PNG sources out of the README path to avoid broken/failed image loading on Thunderstore.
-- No gameplay or HUD behavior changes.
-
-## 0.5.2
-
-- Rendered the main HUD and FPS/Ping screenshots at their native size on Thunderstore to avoid blurry upscaling.
-- No gameplay or HUD behavior changes.
-
-## 0.5.1
-
-- Fixed README image links so screenshots and the project icon render correctly on Thunderstore.
-- No gameplay or HUD behavior changes.
-
 ## 0.5.0
 
 - Added a standalone Inject0r HUD localization framework.

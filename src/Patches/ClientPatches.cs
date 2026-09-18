@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Reflection;
 using HarmonyLib;
 using Inject0rHUD.Services;
 using UnityEngine;
@@ -93,6 +95,129 @@ namespace Inject0rHUD.Patches
         {
             if (Plugin.IsEditModeActive)
                 __result = false;
+        }
+    }
+
+    // Valheim's camera look is gated separately from Player.TakeInput().
+    // Blocking PlayerController.TakeInput plus the local ZInput mouse/gamepad
+    // channels makes F10 behave like a real modal editor instead of requiring
+    // the pause menu to be opened with Escape first.
+    [HarmonyPatch]
+    [HarmonyPriority(Priority.Last)]
+    internal static class EditModePlayerControllerInputPatch
+    {
+        private static IEnumerable<MethodBase> TargetMethods()
+        {
+            MethodInfo method = AccessTools.Method(typeof(PlayerController), "TakeInput");
+            if (method != null)
+                yield return method;
+        }
+
+        private static void Postfix(ref bool __result)
+        {
+            if (Plugin.IsEditModeActive)
+                __result = false;
+        }
+    }
+
+    [HarmonyPatch]
+    [HarmonyPriority(Priority.Last)]
+    internal static class EditModeTextInputVisiblePatch
+    {
+        private static IEnumerable<MethodBase> TargetMethods()
+        {
+            MethodInfo method = AccessTools.Method(typeof(TextInput), "IsVisible");
+            if (method != null)
+                yield return method;
+        }
+
+        private static void Postfix(ref bool __result)
+        {
+            if (Plugin.IsEditModeActive)
+                __result = true;
+        }
+    }
+
+    [HarmonyPatch]
+    [HarmonyPriority(Priority.First)]
+    internal static class EditModeMouseButtonPatch
+    {
+        private static IEnumerable<MethodBase> TargetMethods()
+        {
+            string[] names =
+            {
+                "GetMouseButton",
+                "GetMouseButtonDown",
+                "GetMouseButtonUp",
+                "GetRadialTap",
+                "GetRadialMultiTap"
+            };
+
+            for (int i = 0; i < names.Length; i++)
+            {
+                MethodInfo method = AccessTools.Method(typeof(ZInput), names[i]);
+                if (method != null)
+                    yield return method;
+            }
+        }
+
+        private static bool Prefix(ref bool __result)
+        {
+            if (!Plugin.IsEditModeActive)
+                return true;
+
+            __result = false;
+            return false;
+        }
+    }
+
+    [HarmonyPatch]
+    [HarmonyPriority(Priority.Last)]
+    internal static class EditModeFloatInputPatch
+    {
+        private static IEnumerable<MethodBase> TargetMethods()
+        {
+            string[] names =
+            {
+                "GetMouseScrollWheel",
+                "GetJoyLeftStickX",
+                "GetJoyLeftStickY",
+                "GetJoyRightStickX",
+                "GetJoyRightStickY",
+                "GetJoyRTrigger",
+                "GetJoyLTrigger"
+            };
+
+            for (int i = 0; i < names.Length; i++)
+            {
+                MethodInfo method = AccessTools.Method(typeof(ZInput), names[i]);
+                if (method != null)
+                    yield return method;
+            }
+        }
+
+        private static void Postfix(ref float __result)
+        {
+            if (Plugin.IsEditModeActive)
+                __result = 0f;
+        }
+    }
+
+    [HarmonyPatch]
+    [HarmonyPriority(Priority.Last)]
+    internal static class EditModeMouseDeltaPatch
+    {
+        private static IEnumerable<MethodBase> TargetMethods()
+        {
+            MethodInfo method = AccessTools.Method(typeof(ZInput), "GetMouseDelta");
+            if (method != null)
+                yield return method;
+        }
+
+        private static void Postfix(ref Vector2 __result)
+        {
+            if (Plugin.IsEditModeActive)
+                __result = Vector2.zero;
         }
     }
 }

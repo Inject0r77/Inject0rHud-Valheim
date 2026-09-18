@@ -228,6 +228,8 @@ namespace Inject0rHUD.Profiles
         {
             var minimal = HudProfile.Capture("Minimal", true, _config);
             minimal.Scale = 0.78f;
+            minimal.TimersScale = 0.78f;
+            minimal.DurabilityScale = 0.78f;
             minimal.FontSize = 11;
             minimal.PanelWidth = 235;
             minimal.BackgroundOpacity = 0.42f;
@@ -244,6 +246,8 @@ namespace Inject0rHUD.Profiles
 
             var compact = HudProfile.Capture("Compact", true, _config);
             compact.Scale = 0.90f;
+            compact.TimersScale = 0.90f;
+            compact.DurabilityScale = 0.90f;
             compact.FontSize = 12;
             compact.PanelWidth = 280;
             compact.BackgroundOpacity = 0.60f;
@@ -254,6 +258,8 @@ namespace Inject0rHUD.Profiles
 
             var full = HudProfile.Capture("Full", true, _config);
             full.Scale = 1.0f;
+            full.TimersScale = 1.0f;
+            full.DurabilityScale = 1.0f;
             full.FontSize = 13;
             full.PanelWidth = 320;
             full.BackgroundOpacity = 0.72f;

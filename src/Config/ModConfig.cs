@@ -42,6 +42,7 @@ namespace Inject0rHUD.Config
         internal readonly ConfigEntry<bool> ShowBeehiveHoverTimers;
         internal readonly ConfigEntry<bool> ShowFermenterHoverTimers;
         internal readonly ConfigEntry<bool> ShowProductionHoverTimers;
+        internal readonly ConfigEntry<bool> ShowProductionOnWholeStation;
         internal readonly ConfigEntry<float> BeehiveHoverOpacity;
         internal readonly ConfigEntry<float> FermenterHoverOpacity;
         internal readonly ConfigEntry<float> ProductionHoverOpacity;
@@ -61,9 +62,11 @@ namespace Inject0rHUD.Config
         internal readonly ConfigEntry<int> TimersPosX;
         internal readonly ConfigEntry<int> TimersPosY;
         internal readonly ConfigEntry<int> TimersWidth;
+        internal readonly ConfigEntry<float> TimersScale;
         internal readonly ConfigEntry<int> DurabilityPosX;
         internal readonly ConfigEntry<int> DurabilityPosY;
         internal readonly ConfigEntry<int> DurabilityWidth;
+        internal readonly ConfigEntry<float> DurabilityScale;
 
         internal readonly ConfigEntry<DurabilityValueMode> DurabilityDisplay;
         internal readonly ConfigEntry<bool> ShowItemIcons;
@@ -85,6 +88,23 @@ namespace Inject0rHUD.Config
         internal readonly ConfigEntry<float> PingOpacity;
         internal readonly ConfigEntry<int> PingPosX;
         internal readonly ConfigEntry<int> PingPosY;
+
+        internal readonly ConfigEntry<bool> ShowShipWidget;
+        internal readonly ConfigEntry<bool> ShipShowHealth;
+        internal readonly ConfigEntry<bool> ShipShowSpeed;
+        internal readonly ConfigEntry<bool> ShipShowWind;
+        internal readonly ConfigEntry<bool> ShipShowSail;
+        internal readonly ConfigEntry<float> ShipOpacity;
+        internal readonly ConfigEntry<int> ShipPosX;
+        internal readonly ConfigEntry<int> ShipPosY;
+
+        internal readonly ConfigEntry<bool> ShowTimeWidget;
+        internal readonly ConfigEntry<bool> TimeShowDay;
+        internal readonly ConfigEntry<bool> TimeShowClock;
+        internal readonly ConfigEntry<bool> TimeShowSunEvent;
+        internal readonly ConfigEntry<float> TimeOpacity;
+        internal readonly ConfigEntry<int> TimePosX;
+        internal readonly ConfigEntry<int> TimePosY;
 
         internal readonly ConfigEntry<string> ActiveProfile;
 
@@ -150,6 +170,9 @@ namespace Inject0rHUD.Config
             ShowProductionHoverTimers = config.Bind("World Hover Timers", "ProductionStations", true,
                 "Show queue/fuel and next-output timing for Smelter-based production stations.");
 
+            ShowProductionOnWholeStation = config.Bind("World Hover Timers", "ProductionWholeStationHover", true,
+                "When enabled, production info is shown while aiming at any part of a Smelter-based station. When disabled, it is shown only on the station's native input/output interaction points.");
+
             BeehiveHoverOpacity = config.Bind("World Hover Timers", "BeehiveOpacity", 0.95f,
                 new ConfigDescription("Opacity of beehive hover information.",
                     new AcceptableValueRange<float>(0.20f, 1.0f)));
@@ -200,11 +223,19 @@ namespace Inject0rHUD.Config
                 new ConfigDescription("Timers panel width.",
                     new AcceptableValueRange<int>(120, 720)));
 
+            TimersScale = config.Bind("Separate Timers", "Scale", Scale.Value,
+                new ConfigDescription("Independent scale for the Timers block when separate blocks are enabled.",
+                    new AcceptableValueRange<float>(0.70f, 1.60f)));
+
             DurabilityPosX = config.Bind("Separate Durability", "PositionX", 20, "Durability panel X position.");
             DurabilityPosY = config.Bind("Separate Durability", "PositionY", 330, "Durability panel Y position.");
             DurabilityWidth = config.Bind("Separate Durability", "Width", 280,
                 new ConfigDescription("Durability panel width.",
                     new AcceptableValueRange<int>(120, 720)));
+
+            DurabilityScale = config.Bind("Separate Durability", "Scale", Scale.Value,
+                new ConfigDescription("Independent scale for the Durability block when separate blocks are enabled.",
+                    new AcceptableValueRange<float>(0.70f, 1.60f)));
 
             DurabilityDisplay = config.Bind("Durability", "ValueMode", DurabilityValueMode.Units,
                 "Units = 200/200, Percent = 100%, Both = 100% (200/200).");
@@ -258,6 +289,28 @@ namespace Inject0rHUD.Config
 
             PingPosX = config.Bind("Ping Widget", "PositionX", 100, "Ping cube X position.");
             PingPosY = config.Bind("Ping Widget", "PositionY", 80, "Ping cube Y position.");
+
+            ShowShipWidget = config.Bind("Ship Widget", "Enabled", true,
+                "Show the contextual ship telemetry widget while controlling a ship.");
+            ShipShowHealth = config.Bind("Ship Widget", "ShowHealth", true, "Show ship hull health.");
+            ShipShowSpeed = config.Bind("Ship Widget", "ShowSpeed", true, "Show ship speed in knots and m/s.");
+            ShipShowWind = config.Bind("Ship Widget", "ShowWind", true, "Show wind strength and relative direction.");
+            ShipShowSail = config.Bind("Ship Widget", "ShowSail", true, "Show propulsion state and sail efficiency.");
+            ShipOpacity = config.Bind("Ship Widget", "Opacity", 0.72f,
+                new ConfigDescription("Ship widget background opacity.", new AcceptableValueRange<float>(0.10f, 1.0f)));
+            ShipPosX = config.Bind("Ship Widget", "PositionX", 20, "Ship widget X position.");
+            ShipPosY = config.Bind("Ship Widget", "PositionY", 155, "Ship widget Y position.");
+
+            ShowTimeWidget = config.Bind("Time Widget", "Enabled", true,
+                "Show the contextual world day/time widget.");
+            TimeShowDay = config.Bind("Time Widget", "ShowDay", true, "Show the current Valheim day.");
+            TimeShowClock = config.Bind("Time Widget", "ShowClock", true, "Show an approximate 24-hour game clock.");
+            TimeShowSunEvent = config.Bind("Time Widget", "ShowSunEvent", true,
+                "Show the next sunrise/sunset and the remaining real-time countdown.");
+            TimeOpacity = config.Bind("Time Widget", "Opacity", 0.72f,
+                new ConfigDescription("Time widget background opacity.", new AcceptableValueRange<float>(0.10f, 1.0f)));
+            TimePosX = config.Bind("Time Widget", "PositionX", 180, "Time widget X position.");
+            TimePosY = config.Bind("Time Widget", "PositionY", 80, "Time widget Y position.");
 
             ActiveProfile = config.Bind("Profiles", "ActiveProfile", "Compact",
                 "Selected HUD profile name.");

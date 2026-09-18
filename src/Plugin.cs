@@ -19,7 +19,7 @@ namespace Inject0rHUD
     {
         public const string PluginGuid = "inject0r.Inject0rHUD";
         public const string PluginName = "Inject0r HUD";
-        public const string PluginVersion = "0.5.7";
+        public const string PluginVersion = "0.6.0";
 
         internal static ManualLogSource Log;
         internal static bool IsEditModeActive { get; private set; }
@@ -51,6 +51,10 @@ namespace Inject0rHUD
         internal static bool ProductionHoverTimersEnabled =>
             WorldHoverTimersEnabled &&
             Instance._config.ShowProductionHoverTimers.Value;
+
+        internal static bool ProductionWholeStationHoverEnabled =>
+            ProductionHoverTimersEnabled &&
+            Instance._config.ShowProductionOnWholeStation.Value;
 
         internal static float BeehiveHoverOpacity =>
             Instance != null && Instance._config != null
@@ -199,12 +203,22 @@ namespace Inject0rHUD
             if (_config.ShowPingWidget.Value)
                 TryModule("Ping", () => ping = NetworkStatsService.GetPingMs());
 
+            ShipContextEntry ship = ShipContextEntry.Empty;
+            if (_config.ShowShipWidget.Value || IsEditModeActive)
+                TryModule("ShipContext", () => ship = ShipContextService.Read(player));
+
+            WorldTimeEntry worldTime = WorldTimeEntry.Empty;
+            if (_config.ShowTimeWidget.Value || IsEditModeActive)
+                TryModule("WorldTime", () => worldTime = WorldTimeService.Read());
+
             _snapshot = new HudSnapshot(
                 timers,
                 durability,
                 inCombat,
                 Mathf.Max(0, Mathf.RoundToInt(_fpsSmoothed)),
-                ping);
+                ping,
+                ship,
+                worldTime);
         }
 
         private bool ShouldIncludeDurability(DurabilityEntry entry, bool compactCombat)

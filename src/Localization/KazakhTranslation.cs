@@ -64,6 +64,7 @@ namespace Inject0rHUD.Localization
             { "world.fermenters", "Ферментерлер" },
             { "world.fermenter_opacity", "Ферментер ақпаратының мөлдірлігі" },
             { "world.production", "Балқыту / өндіріс құрылғылары" },
+            { "world.production_whole_station", "Өндіріс ақпаратын бүкіл құрылғыда көрсету" },
             { "world.production_opacity", "Өндіріс ақпаратының мөлдірлігі" },
             { "world.reset", "Әлем таймерлерін қалпына келтіру" },
             { "section.profiles", "ПРОФИЛЬДЕР" },

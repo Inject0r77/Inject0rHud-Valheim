@@ -25,9 +25,11 @@ namespace Inject0rHUD.Profiles
         internal int TimersX;
         internal int TimersY;
         internal int TimersWidth;
+        internal float TimersScale;
         internal int DurabilityX;
         internal int DurabilityY;
         internal int DurabilityWidth;
+        internal float DurabilityScale;
 
         internal bool ShowRested;
         internal bool ShowPower;
@@ -47,6 +49,7 @@ namespace Inject0rHUD.Profiles
         internal bool Beehives;
         internal bool Fermenters;
         internal bool ProductionStations;
+        internal bool ProductionWholeStationHover;
         internal float BeehiveOpacity;
         internal float FermenterOpacity;
         internal float ProductionOpacity;
@@ -64,6 +67,23 @@ namespace Inject0rHUD.Profiles
         internal float PingOpacity;
         internal int PingX;
         internal int PingY;
+
+        internal bool ShowShip;
+        internal bool ShipHealth;
+        internal bool ShipSpeed;
+        internal bool ShipWind;
+        internal bool ShipSail;
+        internal float ShipOpacity;
+        internal int ShipX;
+        internal int ShipY;
+
+        internal bool ShowTime;
+        internal bool TimeDay;
+        internal bool TimeClock;
+        internal bool TimeSunEvent;
+        internal float TimeOpacity;
+        internal int TimeX;
+        internal int TimeY;
 
         internal static HudProfile Capture(string name, bool builtIn, ModConfig c)
         {
@@ -84,9 +104,11 @@ namespace Inject0rHUD.Profiles
                 TimersX = c.TimersPosX.Value,
                 TimersY = c.TimersPosY.Value,
                 TimersWidth = c.TimersWidth.Value,
+                TimersScale = c.TimersScale.Value,
                 DurabilityX = c.DurabilityPosX.Value,
                 DurabilityY = c.DurabilityPosY.Value,
                 DurabilityWidth = c.DurabilityWidth.Value,
+                DurabilityScale = c.DurabilityScale.Value,
                 ShowRested = c.ShowRestedTimer.Value,
                 ShowPower = false,
                 ShowDurability = c.ShowDurability.Value,
@@ -103,6 +125,7 @@ namespace Inject0rHUD.Profiles
                 Beehives = c.ShowBeehiveHoverTimers.Value,
                 Fermenters = c.ShowFermenterHoverTimers.Value,
                 ProductionStations = c.ShowProductionHoverTimers.Value,
+                ProductionWholeStationHover = c.ShowProductionOnWholeStation.Value,
                 BeehiveOpacity = c.BeehiveHoverOpacity.Value,
                 FermenterOpacity = c.FermenterHoverOpacity.Value,
                 ProductionOpacity = c.ProductionHoverOpacity.Value,
@@ -117,7 +140,22 @@ namespace Inject0rHUD.Profiles
                 PingLabel = c.PingShowLabel.Value,
                 PingOpacity = c.PingOpacity.Value,
                 PingX = c.PingPosX.Value,
-                PingY = c.PingPosY.Value
+                PingY = c.PingPosY.Value,
+                ShowShip = c.ShowShipWidget.Value,
+                ShipHealth = c.ShipShowHealth.Value,
+                ShipSpeed = c.ShipShowSpeed.Value,
+                ShipWind = c.ShipShowWind.Value,
+                ShipSail = c.ShipShowSail.Value,
+                ShipOpacity = c.ShipOpacity.Value,
+                ShipX = c.ShipPosX.Value,
+                ShipY = c.ShipPosY.Value,
+                ShowTime = c.ShowTimeWidget.Value,
+                TimeDay = c.TimeShowDay.Value,
+                TimeClock = c.TimeShowClock.Value,
+                TimeSunEvent = c.TimeShowSunEvent.Value,
+                TimeOpacity = c.TimeOpacity.Value,
+                TimeX = c.TimePosX.Value,
+                TimeY = c.TimePosY.Value
             };
         }
 
@@ -136,9 +174,11 @@ namespace Inject0rHUD.Profiles
             c.TimersPosX.Value = TimersX;
             c.TimersPosY.Value = TimersY;
             c.TimersWidth.Value = TimersWidth;
+            c.TimersScale.Value = TimersScale > 0f ? TimersScale : Scale;
             c.DurabilityPosX.Value = DurabilityX;
             c.DurabilityPosY.Value = DurabilityY;
             c.DurabilityWidth.Value = DurabilityWidth;
+            c.DurabilityScale.Value = DurabilityScale > 0f ? DurabilityScale : Scale;
             c.ShowRestedTimer.Value = ShowRested;
             c.ShowPowerCooldown.Value = false;
             c.ShowDurability.Value = ShowDurability;
@@ -155,6 +195,7 @@ namespace Inject0rHUD.Profiles
             c.ShowBeehiveHoverTimers.Value = Beehives;
             c.ShowFermenterHoverTimers.Value = Fermenters;
             c.ShowProductionHoverTimers.Value = ProductionStations;
+            c.ShowProductionOnWholeStation.Value = ProductionWholeStationHover;
             c.BeehiveHoverOpacity.Value = BeehiveOpacity;
             c.FermenterHoverOpacity.Value = FermenterOpacity;
             c.ProductionHoverOpacity.Value = ProductionOpacity;
@@ -170,6 +211,21 @@ namespace Inject0rHUD.Profiles
             c.PingOpacity.Value = PingOpacity;
             c.PingPosX.Value = PingX;
             c.PingPosY.Value = PingY;
+            c.ShowShipWidget.Value = ShowShip;
+            c.ShipShowHealth.Value = ShipHealth;
+            c.ShipShowSpeed.Value = ShipSpeed;
+            c.ShipShowWind.Value = ShipWind;
+            c.ShipShowSail.Value = ShipSail;
+            c.ShipOpacity.Value = ShipOpacity > 0f ? ShipOpacity : 0.72f;
+            c.ShipPosX.Value = ShipX;
+            c.ShipPosY.Value = ShipY;
+            c.ShowTimeWidget.Value = ShowTime;
+            c.TimeShowDay.Value = TimeDay;
+            c.TimeShowClock.Value = TimeClock;
+            c.TimeShowSunEvent.Value = TimeSunEvent;
+            c.TimeOpacity.Value = TimeOpacity > 0f ? TimeOpacity : 0.72f;
+            c.TimePosX.Value = TimeX;
+            c.TimePosY.Value = TimeY;
             c.ActiveProfile.Value = Name;
             c.Save();
         }
@@ -178,7 +234,7 @@ namespace Inject0rHUD.Profiles
         {
             string raw = string.Join("\t", new[]
             {
-                "IHUD5",
+                "IHUD6",
                 Enc(Name),
                 B(SeparateBlocks), B(SnapEnabled), SnapDistance.ToString(),
                 F(Scale), FontSize.ToString(), PanelWidth.ToString(), F(BackgroundOpacity), B(SectionHeaders),
@@ -191,7 +247,11 @@ namespace Inject0rHUD.Profiles
                 B(Beehives), B(Fermenters), B(ProductionStations),
                 F(BeehiveOpacity), F(FermenterOpacity), F(ProductionOpacity),
                 B(ShowFps), B(FpsValue), B(FpsLabel), F(FpsOpacity), FpsX.ToString(), FpsY.ToString(),
-                B(ShowPing), B(PingValue), B(PingLabel), F(PingOpacity), PingX.ToString(), PingY.ToString()
+                B(ShowPing), B(PingValue), B(PingLabel), F(PingOpacity), PingX.ToString(), PingY.ToString(),
+                F(TimersScale), F(DurabilityScale),
+                B(ShowShip), B(ShipHealth), B(ShipSpeed), B(ShipWind), B(ShipSail), F(ShipOpacity), ShipX.ToString(), ShipY.ToString(),
+                B(ShowTime), B(TimeDay), B(TimeClock), B(TimeSunEvent), F(TimeOpacity), TimeX.ToString(), TimeY.ToString(),
+                B(ProductionWholeStationHover)
             });
 
             return Convert.ToBase64String(Encoding.UTF8.GetBytes(raw));
@@ -202,10 +262,11 @@ namespace Inject0rHUD.Profiles
             string raw = Encoding.UTF8.GetString(Convert.FromBase64String(code.Trim()));
             string[] p = raw.Split('\t');
 
-            if (p.Length < 43 || (p[0] != "IHUD4" && p[0] != "IHUD5"))
+            if (p.Length < 43 || (p[0] != "IHUD4" && p[0] != "IHUD5" && p[0] != "IHUD6"))
                 throw new FormatException("Unsupported profile code.");
 
-            bool v5 = p[0] == "IHUD5";
+            bool v5Plus = p[0] == "IHUD5" || p[0] == "IHUD6";
+            bool v6 = p[0] == "IHUD6";
 
             int i = 1;
             var v = new HudProfile();
@@ -241,7 +302,7 @@ namespace Inject0rHUD.Profiles
             v.PickableOpacity = PF(p[i++], 0.95f);
             v.PlantOpacity = PF(p[i++], 0.95f);
 
-            if (v5)
+            if (v5Plus)
             {
                 if (p.Length < 49)
                     throw new FormatException("Incomplete IHUD5 profile code.");
@@ -252,6 +313,7 @@ namespace Inject0rHUD.Profiles
                 v.BeehiveOpacity = PF(p[i++], 0.95f);
                 v.FermenterOpacity = PF(p[i++], 0.95f);
                 v.ProductionOpacity = PF(p[i++], 0.95f);
+                v.ProductionWholeStationHover = true;
             }
             else
             {
@@ -261,6 +323,7 @@ namespace Inject0rHUD.Profiles
                 v.BeehiveOpacity = 0.95f;
                 v.FermenterOpacity = 0.95f;
                 v.ProductionOpacity = 0.95f;
+                v.ProductionWholeStationHover = true;
             }
 
             v.ShowFps = PB(p[i++]);
@@ -275,6 +338,55 @@ namespace Inject0rHUD.Profiles
             v.PingOpacity = PF(p[i++], 0.72f);
             v.PingX = PI(p[i++], 100);
             v.PingY = PI(p[i++], 80);
+
+            if (v6)
+            {
+                if (p.Length < 66)
+                    throw new FormatException("Incomplete IHUD6 profile code.");
+
+                v.TimersScale = PF(p[i++], v.Scale);
+                v.DurabilityScale = PF(p[i++], v.Scale);
+                v.ShowShip = PB(p[i++]);
+                v.ShipHealth = PB(p[i++]);
+                v.ShipSpeed = PB(p[i++]);
+                v.ShipWind = PB(p[i++]);
+                v.ShipSail = PB(p[i++]);
+                v.ShipOpacity = PF(p[i++], 0.72f);
+                v.ShipX = PI(p[i++], 20);
+                v.ShipY = PI(p[i++], 155);
+                v.ShowTime = PB(p[i++]);
+                v.TimeDay = PB(p[i++]);
+                v.TimeClock = PB(p[i++]);
+                v.TimeSunEvent = PB(p[i++]);
+                v.TimeOpacity = PF(p[i++], 0.72f);
+                v.TimeX = PI(p[i++], 180);
+                v.TimeY = PI(p[i++], 80);
+
+                // IHUD6 may include the optional whole-station production-hover flag.
+                // Older IHUD6 codes remain valid and keep the current default.
+                if (i < p.Length)
+                    v.ProductionWholeStationHover = PB(p[i++]);
+            }
+            else
+            {
+                v.TimersScale = v.Scale;
+                v.DurabilityScale = v.Scale;
+                v.ShowShip = false;
+                v.ShipHealth = true;
+                v.ShipSpeed = true;
+                v.ShipWind = true;
+                v.ShipSail = true;
+                v.ShipOpacity = 0.72f;
+                v.ShipX = 20;
+                v.ShipY = 155;
+                v.ShowTime = false;
+                v.TimeDay = true;
+                v.TimeClock = true;
+                v.TimeSunEvent = true;
+                v.TimeOpacity = 0.72f;
+                v.TimeX = 180;
+                v.TimeY = 80;
+            }
 
             return v;
         }

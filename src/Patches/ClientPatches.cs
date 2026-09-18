@@ -32,7 +32,6 @@ namespace Inject0rHUD.Patches
         }
     }
 
-
     [HarmonyPatch(typeof(Beehive), "GetHoverText")]
     internal static class BeehiveHoverInfoPatch
     {
@@ -59,8 +58,12 @@ namespace Inject0rHUD.Patches
         }
     }
 
-    [HarmonyPatch(typeof(Smelter), "GetHoverText")]
-    internal static class ProductionHoverInfoPatch
+    // Valheim 1.0.x does not expose Smelter as a Hoverable. The visible
+    // tooltip comes from its Switch objects, which call these private Smelter
+    // callbacks. Patch the callbacks directly so production info is appended
+    // regardless of which smelter interaction point the player is aiming at.
+    [HarmonyPatch(typeof(Smelter), "OnHoverAddOre")]
+    internal static class ProductionHoverAddOrePatch
     {
         [HarmonyPostfix]
         private static void Postfix(Smelter __instance, ref string __result)
@@ -69,6 +72,87 @@ namespace Inject0rHUD.Patches
                 return;
 
             __result = ProductionHoverService.AppendProduction(__instance, __result);
+        }
+    }
+
+    [HarmonyPatch(typeof(Smelter), "OnHoverAddFuel")]
+    internal static class ProductionHoverAddFuelPatch
+    {
+        [HarmonyPostfix]
+        private static void Postfix(Smelter __instance, ref string __result)
+        {
+            if (!Plugin.ProductionHoverTimersEnabled)
+                return;
+
+            __result = ProductionHoverService.AppendProduction(__instance, __result);
+        }
+    }
+
+    [HarmonyPatch(typeof(Smelter), "OnHoverEmptyOre")]
+    internal static class ProductionHoverEmptyOrePatch
+    {
+        [HarmonyPostfix]
+        private static void Postfix(Smelter __instance, ref string __result)
+        {
+            if (!Plugin.ProductionHoverTimersEnabled)
+                return;
+
+            __result = ProductionHoverService.AppendProduction(__instance, __result);
+        }
+    }
+
+
+    // Optional wide-hover mode for Smelter-based stations. Native
+    // interaction-point mode is already covered by the three Smelter callbacks
+    // above. When the user enables whole-station hover, this HUD-level fallback
+    // also resolves plain station colliders (body/output opening/etc.) to their
+    // parent Smelter and shows the same read-only production block.
+    [HarmonyPatch(typeof(Hud), "UpdateCrosshair")]
+    internal static class ProductionHoverCentralOutputPatch
+    {
+        private static readonly FieldInfo HoverNameField =
+            AccessTools.Field(typeof(Hud), "m_hoverName");
+
+        [HarmonyPostfix]
+        private static void Postfix(Hud __instance, Player player)
+        {
+            if (!Plugin.ProductionWholeStationHoverEnabled || __instance == null || player == null)
+                return;
+
+            GameObject hoverObject = player.GetHoverObject();
+            if (hoverObject == null)
+                return;
+
+            Smelter smelter = hoverObject.GetComponentInParent<Smelter>();
+            if (smelter == null)
+                smelter = hoverObject.GetComponent<Smelter>();
+            if (smelter == null)
+                smelter = hoverObject.GetComponentInChildren<Smelter>();
+            if (smelter == null)
+                return;
+
+            try
+            {
+                object hoverName = HoverNameField != null
+                    ? HoverNameField.GetValue(__instance)
+                    : null;
+                if (hoverName == null)
+                    return;
+
+                PropertyInfo textProperty = hoverName.GetType().GetProperty(
+                    "text", BindingFlags.Instance | BindingFlags.Public);
+                if (textProperty == null || !textProperty.CanRead || !textProperty.CanWrite)
+                    return;
+
+                string current = textProperty.GetValue(hoverName, null) as string ?? string.Empty;
+                string updated = ProductionHoverService.AppendProduction(smelter, current);
+                if (!string.Equals(current, updated, System.StringComparison.Ordinal))
+                    textProperty.SetValue(hoverName, updated, null);
+            }
+            catch (System.Exception ex)
+            {
+                Plugin.LogHoverErrorOnce("ProductionCentralHover", ex);
+            }
         }
     }
 
@@ -98,10 +182,6 @@ namespace Inject0rHUD.Patches
         }
     }
 
-    // Valheim's camera look is gated separately from Player.TakeInput().
-    // Blocking PlayerController.TakeInput plus the local ZInput mouse/gamepad
-    // channels makes F10 behave like a real modal editor instead of requiring
-    // the pause menu to be opened with Escape first.
     [HarmonyPatch]
     [HarmonyPriority(Priority.Last)]
     internal static class EditModePlayerControllerInputPatch

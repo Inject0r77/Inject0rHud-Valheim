@@ -107,7 +107,7 @@ Copy-Item $iconPath $stage
 
 $forbidden = Get-ChildItem $stage -Recurse -File | Where-Object {
     $_.Extension -in @(".pdb", ".cs", ".csproj", ".sln") -or
-    $_.Name -match 'assembly_(valheim|utils)\.dll'
+    $_.Name -match 'assembly_(valheim|utils|guiutils)\.dll'
 }
 
 if ($forbidden) {

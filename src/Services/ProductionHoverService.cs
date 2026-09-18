@@ -11,6 +11,15 @@ namespace Inject0rHUD.Services
         private const BindingFlags InstanceFlags =
             BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
 
+        // Beehive itself updates its stored production progress only once every
+        // ten seconds. Cache the expensive biome/cover checks briefly and use
+        // the synced last-update timestamp to render a smooth read-only ETA
+        // between vanilla UpdateBees ticks.
+        private const float BeehiveStateCacheSeconds = 2f;
+        private static Beehive _cachedBeehive;
+        private static float _cachedBeehiveStateUntil;
+        private static bool _cachedBeehiveCanProduce;
+
         internal static string AppendBeehive(Beehive hive, string original)
         {
             if (hive == null)
@@ -42,13 +51,26 @@ namespace Inject0rHUD.Services
 
                     if (secPerUnit > 0f)
                     {
-                        float remaining = secPerUnit - progress;
-                        if (remaining > 0.5f)
+                        // Vanilla writes product/lastTime from UpdateBees on a
+                        // 10-second cadence. Do not write anything ourselves;
+                        // only project the current progress from synchronized
+                        // world time so the displayed countdown ticks smoothly.
+                        if (BeehiveCanProduce(hive) && ZNet.instance != null)
                         {
-                            extra += "\n" +
-                                ModLocalization.T("world.next_honey") +
-                                ": " + FormatTime(remaining);
+                            long nowTicks = ZNet.instance.GetTime().Ticks;
+                            long lastTicks = ReadZdoLong(zdo, "lastTime", nowTicks);
+                            if (lastTicks > 0L && nowTicks > lastTicks)
+                            {
+                                double elapsed = TimeSpan.FromTicks(nowTicks - lastTicks).TotalSeconds;
+                                if (elapsed > 0.0)
+                                    progress += (float)elapsed;
+                            }
                         }
+
+                        float remaining = Mathf.Max(0f, secPerUnit - progress);
+                        extra += "\n" +
+                            ModLocalization.T("world.next_honey") +
+                            ": " + FormatTime(remaining);
                     }
                 }
 
@@ -130,6 +152,12 @@ namespace Inject0rHUD.Services
             if (smelter == null)
                 return original;
 
+            // The same production block can be reached through a Smelter
+            // callback and through the HUD fallback used for the central/output
+            // opening. Do not append it twice.
+            if (HasProductionOverlay(original))
+                return original;
+
             try
             {
                 ZNetView nview = FindNView(smelter);
@@ -199,13 +227,53 @@ namespace Inject0rHUD.Services
                     return original;
 
                 string color = TimerColor(Plugin.ProductionHoverOpacity);
-                return original + "\n<color=#" + color + ">" + extra + "</color>";
+                string block = "<color=#" + color + ">" + extra + "</color>";
+                return string.IsNullOrEmpty(original) ? block : original + "\n" + block;
             }
             catch (Exception ex)
             {
                 Plugin.LogHoverErrorOnce("ProductionHover", ex);
                 return original;
             }
+        }
+
+        private static bool BeehiveCanProduce(Beehive hive)
+        {
+            if (hive == null)
+                return false;
+
+            float now = Time.unscaledTime;
+            if (!ReferenceEquals(hive, _cachedBeehive) || now >= _cachedBeehiveStateUntil)
+            {
+                _cachedBeehive = hive;
+                _cachedBeehiveStateUntil = now + BeehiveStateCacheSeconds;
+
+                // These are the same two conditions vanilla UpdateBees checks
+                // before advancing production. Reflection keeps compatibility
+                // with their private visibility without changing game state.
+                bool biomeOk = InvokeBool(hive, "CheckBiome", true);
+                bool spaceOk = biomeOk && InvokeBool(hive, "HaveFreeSpace", true);
+                _cachedBeehiveCanProduce = biomeOk && spaceOk;
+            }
+
+            return _cachedBeehiveCanProduce;
+        }
+
+
+        internal static bool HasProductionOverlay(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+                return false;
+
+            string queue = ModLocalization.T("world.queue");
+            string fuel = ModLocalization.T("world.fuel");
+            string next = ModLocalization.T("world.next_output");
+            string paused = ModLocalization.T("world.paused");
+
+            return (!string.IsNullOrEmpty(queue) && text.Contains(queue + ":")) ||
+                   (!string.IsNullOrEmpty(fuel) && text.Contains(fuel + ":")) ||
+                   (!string.IsNullOrEmpty(next) && text.Contains(next + ":")) ||
+                   (!string.IsNullOrEmpty(paused) && text.Contains(paused));
         }
 
         private static bool CanShowWallClockTimer(Smelter smelter)
@@ -309,6 +377,16 @@ namespace Inject0rHUD.Services
             catch { return fallback; }
         }
 
+        private static bool InvokeBool(object instance, string name, bool fallback)
+        {
+            object value = Invoke(instance, name);
+            if (value == null)
+                return fallback;
+
+            try { return Convert.ToBoolean(value); }
+            catch { return fallback; }
+        }
+
         private static string InvokeString(object instance, string name)
         {
             object value = Invoke(instance, name);
@@ -390,6 +468,32 @@ namespace Inject0rHUD.Services
             {
                 object value = method.Invoke(zdo, new object[] { key, fallback });
                 return Convert.ToInt32(value);
+            }
+            catch
+            {
+                return fallback;
+            }
+        }
+
+        private static long ReadZdoLong(object zdo, string key, long fallback)
+        {
+            if (zdo == null)
+                return fallback;
+
+            MethodInfo method = zdo.GetType().GetMethod(
+                "GetLong",
+                InstanceFlags,
+                null,
+                new[] { typeof(string), typeof(long) },
+                null);
+
+            if (method == null)
+                return fallback;
+
+            try
+            {
+                object value = method.Invoke(zdo, new object[] { key, fallback });
+                return Convert.ToInt64(value);
             }
             catch
             {

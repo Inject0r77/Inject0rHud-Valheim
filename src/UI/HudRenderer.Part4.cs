@@ -9,11 +9,64 @@ using Inject0rHUD.Profiles;
 using Inject0rHUD.Util;
 using UnityEngine;
 
-
 namespace Inject0rHUD.UI
 {
     internal sealed partial class HudRenderer
     {
+        private void EnsureHudStyles(ModConfig cfg, float scale)
+        {
+            int font = Mathf.Max(10, Mathf.RoundToInt(cfg.FontSize.Value * scale));
+
+            if (_text != null && _text.fontSize == font)
+                return;
+
+            _text = new GUIStyle(GUI.skin.label)
+            {
+                fontSize = font,
+                alignment = TextAnchor.MiddleLeft,
+                clipping = TextClipping.Clip,
+                wordWrap = false,
+                normal = { textColor = new Color(0.93f, 0.94f, 0.94f, 1f) }
+            };
+
+            _value = new GUIStyle(_text)
+            {
+                alignment = TextAnchor.MiddleRight,
+                normal = { textColor = new Color(0.79f, 0.86f, 0.81f, 1f) }
+            };
+
+            _header = new GUIStyle(_text)
+            {
+                fontSize = Mathf.Max(font - 1, 9),
+                fontStyle = FontStyle.Bold,
+                alignment = TextAnchor.MiddleLeft,
+                normal = { textColor = new Color(0.55f, 0.88f, 0.61f, 1f) }
+            };
+
+            _editorLabel = new GUIStyle(_text)
+            {
+                fontSize = Mathf.Max(font - 2, 9),
+                fontStyle = FontStyle.Bold,
+                alignment = TextAnchor.MiddleCenter,
+                normal = { textColor = new Color(0.72f, 1.0f, 0.78f, 1f) }
+            };
+
+            _widgetValue = new GUIStyle(_text)
+            {
+                fontSize = Mathf.Max(font + 4, 14),
+                fontStyle = FontStyle.Bold,
+                alignment = TextAnchor.MiddleCenter,
+                normal = { textColor = Color.white }
+            };
+
+            _widgetLabel = new GUIStyle(_text)
+            {
+                fontSize = Mathf.Max(font - 1, 9),
+                alignment = TextAnchor.MiddleCenter,
+                normal = { textColor = new Color(0.55f, 0.88f, 0.61f, 1f) }
+            };
+        }
+
         private void EnsureResources(ModConfig cfg)
         {
             if (_background == null)
@@ -28,56 +81,7 @@ namespace Inject0rHUD.UI
                 _editorHandle = MakeTexture(new Color(0.88f, 1.0f, 0.90f, 1f));
             }
 
-            int font = Mathf.Max(10, Mathf.RoundToInt(cfg.FontSize.Value * cfg.Scale.Value));
-
-            if (_text == null || _text.fontSize != font)
-            {
-                _text = new GUIStyle(GUI.skin.label)
-                {
-                    fontSize = font,
-                    alignment = TextAnchor.MiddleLeft,
-                    clipping = TextClipping.Clip,
-                    wordWrap = false,
-                    normal = { textColor = new Color(0.93f, 0.94f, 0.94f, 1f) }
-                };
-
-                _value = new GUIStyle(_text)
-                {
-                    alignment = TextAnchor.MiddleRight,
-                    normal = { textColor = new Color(0.79f, 0.86f, 0.81f, 1f) }
-                };
-
-                _header = new GUIStyle(_text)
-                {
-                    fontSize = Mathf.Max(font - 1, 9),
-                    fontStyle = FontStyle.Bold,
-                    alignment = TextAnchor.MiddleLeft,
-                    normal = { textColor = new Color(0.55f, 0.88f, 0.61f, 1f) }
-                };
-
-                _editorLabel = new GUIStyle(_text)
-                {
-                    fontSize = Mathf.Max(font - 2, 9),
-                    fontStyle = FontStyle.Bold,
-                    alignment = TextAnchor.MiddleCenter,
-                    normal = { textColor = new Color(0.72f, 1.0f, 0.78f, 1f) }
-                };
-
-                _widgetValue = new GUIStyle(_text)
-                {
-                    fontSize = Mathf.Max(font + 4, 14),
-                    fontStyle = FontStyle.Bold,
-                    alignment = TextAnchor.MiddleCenter,
-                    normal = { textColor = Color.white }
-                };
-
-                _widgetLabel = new GUIStyle(_text)
-                {
-                    fontSize = Mathf.Max(font - 1, 9),
-                    alignment = TextAnchor.MiddleCenter,
-                    normal = { textColor = new Color(0.55f, 0.88f, 0.61f, 1f) }
-                };
-            }
+            EnsureHudStyles(cfg, cfg.Scale.Value);
 
             if (_settingsText == null)
             {

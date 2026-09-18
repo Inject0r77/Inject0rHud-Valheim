@@ -1,5 +1,48 @@
 # Changelog
 
+## 0.6.0
+
+### Added
+
+- Added the new **Ship Widget**, shown while controlling a ship.
+  - Hull health.
+  - Speed in knots and m/s.
+  - Wind strength and relative direction.
+  - Propulsion / sail state.
+  - Sail efficiency.
+  - Rudder position.
+- Added the new **World Time Widget**.
+  - Current Valheim day.
+  - Approximate 24-hour in-game clock.
+  - Next sunrise / sunset time and countdown.
+- Added independent enable/disable, opacity and positioning controls for Ship and World Time widgets.
+- Added a **whole-station production hover** option for Smelter-based stations.
+  - When enabled, production information can be viewed while aiming at the station body/output area.
+  - When disabled, information is only shown on Valheim's native input/output interaction points.
+- Profile export format advanced to `IHUD6`.
+- Added profile support for Ship Widget, World Time Widget and independent Timers / Durability scales.
+- Older `IHUD4` and `IHUD5` profile codes remain import-compatible.
+
+### Improved
+
+- Production hover information now hooks the actual Valheim Smelter interaction callbacks.
+- Smelter-based stations can show queue size, available fuel where applicable and next-output countdown when a reliable ETA is available.
+- Beehive next-honey countdown now updates smoothly between Valheim's slower internal production updates using read-only projected progress.
+- Improved contextual hover support without adding world writes, custom RPCs or server requirements.
+
+### Fixed
+
+- Fixed separate **Timers** and **Durability** panels sharing the same resize scale.
+- Fixed production information not appearing on Smelter-based stations because Valheim routes their hover text through separate interaction callbacks.
+- Fixed duplicate production information when whole-station hover and a native interaction point overlap.
+- Fixed F10 Edit Mode mouse capture / gameplay input so moving the mouse in the editor no longer rotates the player or camera.
+
+### Notes
+
+- Windmill wall-clock ETA is intentionally omitted because its production rate changes with live wind strength.
+- Inject0r HUD remains client-side only.
+- No ServerSync, custom RPCs, world writes, character-save writes, inventory modification or gameplay-stat changes were added.
+
 ## 0.5.0
 
 - Added a standalone Inject0r HUD localization framework.

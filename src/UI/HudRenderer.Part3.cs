@@ -9,7 +9,6 @@ using Inject0rHUD.Profiles;
 using Inject0rHUD.Util;
 using UnityEngine;
 
-
 namespace Inject0rHUD.UI
 {
     internal sealed partial class HudRenderer
@@ -75,9 +74,11 @@ namespace Inject0rHUD.UI
             c.TimersPosX.Value = 20;
             c.TimersPosY.Value = 220;
             c.TimersWidth.Value = 250;
+            c.TimersScale.Value = c.Scale.Value;
             c.DurabilityPosX.Value = 20;
             c.DurabilityPosY.Value = 330;
             c.DurabilityWidth.Value = 280;
+            c.DurabilityScale.Value = c.Scale.Value;
         }
 
         private static void ResetTimers(ModConfig c)
@@ -87,6 +88,7 @@ namespace Inject0rHUD.UI
             c.TimersPosX.Value = 20;
             c.TimersPosY.Value = 220;
             c.TimersWidth.Value = 250;
+            c.TimersScale.Value = c.Scale.Value;
         }
 
         private static void ResetDurability(ModConfig c)
@@ -98,6 +100,7 @@ namespace Inject0rHUD.UI
             c.SmartDurabilityThreshold.Value = 35;
             c.WarningPercent.Value = 25;
             c.CriticalPercent.Value = 10;
+            c.DurabilityScale.Value = c.Scale.Value;
         }
 
         private static void ResetFps(ModConfig c)
@@ -120,6 +123,29 @@ namespace Inject0rHUD.UI
             c.PingPosY.Value = 80;
         }
 
+        private static void ResetShip(ModConfig c)
+        {
+            c.ShowShipWidget.Value = true;
+            c.ShipShowHealth.Value = true;
+            c.ShipShowSpeed.Value = true;
+            c.ShipShowWind.Value = true;
+            c.ShipShowSail.Value = true;
+            c.ShipOpacity.Value = 0.72f;
+            c.ShipPosX.Value = 20;
+            c.ShipPosY.Value = 155;
+        }
+
+        private static void ResetTime(ModConfig c)
+        {
+            c.ShowTimeWidget.Value = true;
+            c.TimeShowDay.Value = true;
+            c.TimeShowClock.Value = true;
+            c.TimeShowSunEvent.Value = true;
+            c.TimeOpacity.Value = 0.72f;
+            c.TimePosX.Value = 180;
+            c.TimePosY.Value = 80;
+        }
+
         private static void ResetWorldTimers(ModConfig c)
         {
             c.ShowWorldHoverTimers.Value = true;
@@ -128,6 +154,7 @@ namespace Inject0rHUD.UI
             c.ShowBeehiveHoverTimers.Value = true;
             c.ShowFermenterHoverTimers.Value = true;
             c.ShowProductionHoverTimers.Value = true;
+            c.ShowProductionOnWholeStation.Value = true;
             c.PickableHoverOpacity.Value = 0.95f;
             c.PlantHoverOpacity.Value = 0.95f;
             c.BeehiveHoverOpacity.Value = 0.95f;
@@ -212,10 +239,5 @@ namespace Inject0rHUD.UI
             if (value == SmartDurabilityMode.BelowThreshold) return SmartDurabilityMode.CurrentItemOnly;
             return SmartDurabilityMode.Off;
         }
-
-        // -----------------------------------------------------------------
-        // Styles / utilities
-        // -----------------------------------------------------------------
-
     }
 }

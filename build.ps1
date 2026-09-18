@@ -56,6 +56,7 @@ if (-not $ValheimDir) {
 $requiredManaged = @(
     "assembly_valheim.dll",
     "assembly_utils.dll",
+    "assembly_guiutils.dll",
     "UnityEngine.dll",
     "UnityEngine.CoreModule.dll",
     "UnityEngine.IMGUIModule.dll",

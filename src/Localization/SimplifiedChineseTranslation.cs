@@ -64,6 +64,7 @@ namespace Inject0rHUD.Localization
             { "world.fermenters", "发酵桶" },
             { "world.fermenter_opacity", "发酵桶信息透明度" },
             { "world.production", "熔炉 / 生产设施" },
+            { "world.production_whole_station", "整台生产设施均显示信息" },
             { "world.production_opacity", "生产信息透明度" },
             { "world.reset", "重置世界计时器" },
             { "section.profiles", "配置方案" },

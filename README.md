@@ -6,11 +6,11 @@
 
 <p align="center">
   A configurable client-side HUD for Valheim.<br>
-  Timers, durability, production info, profiles and multilingual UI — without requiring anything on the server.
+  Timers, durability, production info, context widgets, profiles and multilingual UI — without requiring anything on the server.
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-0.5.7-7c5cff?style=flat-square" alt="Version 0.5.7">
+  <img src="https://img.shields.io/badge/version-0.6.0-7c5cff?style=flat-square" alt="Version 0.6.0">
   <img src="https://img.shields.io/badge/game-Valheim-4c8eda?style=flat-square" alt="Valheim">
   <img src="https://img.shields.io/badge/BepInEx-5.4.2350-3fb950?style=flat-square" alt="BepInEx 5.4.2350">
   <img src="https://img.shields.io/badge/type-client--side-2ea043?style=flat-square" alt="Client-side">
@@ -34,7 +34,7 @@
 
 Inject0r HUD adds useful information to Valheim without trying to replace the original interface.
 
-The mod is built around small, optional widgets that can be moved, resized and disabled independently. You can keep it minimal with a couple of timers, or turn it into a more detailed HUD with durability, FPS/Ping, profiles and contextual world information.
+The mod is built around small, optional widgets that can be moved, resized and disabled independently. You can keep it minimal with a couple of timers, or turn it into a more detailed HUD with durability, FPS/Ping, profiles, ship/time widgets and contextual world information.
 
 Everything is client-side. A normal server does not need Inject0r HUD installed.
 
@@ -45,6 +45,26 @@ Everything is client-side. A normal server does not need Inject0r HUD installed.
 ![Inject0r HUD timers and durability](https://cdn.jsdelivr.net/gh/Inject0r77/Inject0rHud-Valheim@main/assets/screenshots/hud-main-ts.jpg)
 
 ![Inject0r HUD FPS and Ping widgets](https://cdn.jsdelivr.net/gh/Inject0r77/Inject0rHud-Valheim@main/assets/screenshots/hud-fps-ping-ts.jpg)
+
+### Context widgets
+
+<p align="center">
+  <img src="https://cdn.jsdelivr.net/gh/Inject0r77/Inject0rHud-Valheim@main/assets/screenshots/ship-widget.webp" alt="Ship widget" width="58%">
+  <img src="https://cdn.jsdelivr.net/gh/Inject0r77/Inject0rHud-Valheim@main/assets/screenshots/world-time.webp" alt="World Time widget" width="38%">
+</p>
+
+### World hover info
+
+<p align="center">
+  <img src="https://cdn.jsdelivr.net/gh/Inject0r77/Inject0rHud-Valheim@main/assets/screenshots/hover-smelter.webp" alt="Smelter production info" width="31%">
+  <img src="https://cdn.jsdelivr.net/gh/Inject0r77/Inject0rHud-Valheim@main/assets/screenshots/hover-kiln.webp" alt="Charcoal kiln production info" width="31%">
+  <img src="https://cdn.jsdelivr.net/gh/Inject0r77/Inject0rHud-Valheim@main/assets/screenshots/hover-fermenter.webp" alt="Fermenter timer" width="31%">
+</p>
+
+<p align="center">
+  <img src="https://cdn.jsdelivr.net/gh/Inject0r77/Inject0rHud-Valheim@main/assets/screenshots/hover-crop.webp" alt="Crop growth timer" width="31%">
+  <img src="https://cdn.jsdelivr.net/gh/Inject0r77/Inject0rHud-Valheim@main/assets/screenshots/hover-beehive.webp" alt="Beehive timer" width="31%">
+</p>
 
 ### Settings
 
@@ -72,9 +92,36 @@ Everything is client-side. A normal server does not need Inject0r HUD installed.
 - Durability display as units, percent or both.
 - Optional Smart Durability modes.
 - Separate movable Timers and Durability blocks.
+- Independent scale for separate Timers and Durability blocks.
 - Drag & resize directly in edit mode.
 - Snap to screen edges and center.
 - Adjustable scale, opacity and text size.
+
+### Context widgets
+
+#### Ship
+
+While controlling a ship, Inject0r HUD can display:
+
+- hull health;
+- speed in knots and m/s;
+- wind strength and relative direction;
+- propulsion / sail state;
+- sail efficiency;
+- rudder position.
+
+The Ship widget is optional and can be moved independently in F10 Edit Mode.
+
+#### World Time
+
+A separate World Time widget can display:
+
+- the current Valheim day;
+- approximate 24-hour in-game time;
+- the next sunrise or sunset;
+- time remaining until that event.
+
+Like the other widgets, it can be disabled or repositioned independently.
 
 ### FPS & Ping
 
@@ -110,7 +157,11 @@ Examples of information that may be shown:
 - available fuel;
 - time until the next output.
 
-Inject0r HUD does not guess timers. If the client cannot determine a trustworthy value, the ETA is simply omitted.
+For Smelter-based production stations, a separate setting controls whether the information is shown only on Valheim's native input/output interaction points or while aiming at the station body/output area as well. Beehives and fermenters keep their normal hover behavior.
+
+Beehive countdowns are projected read-only between Valheim's slower internal production updates so the visible timer can tick smoothly without modifying the world state.
+
+Inject0r HUD does not guess timers. If the client cannot determine a trustworthy value, the ETA is simply omitted. Windmills deliberately omit wall-clock ETA because their live production rate changes with wind strength.
 
 ### Profiles
 
@@ -124,11 +175,13 @@ You can also:
 - export a profile as a compact code;
 - import a profile from another player.
 
+The current export format is `IHUD6`. Older `IHUD4` and `IHUD5` profile codes remain import-compatible.
+
 ### Languages
 
 Inject0r HUD has its own interface language setting.
 
-Supported in `0.5.7`:
+Supported in `0.6.0`:
 
 - **English** — default;
 - **Русский**;
@@ -149,7 +202,7 @@ Vanilla item names and status-effect names still use Valheim's own localization 
 | `F8` | Show / hide Inject0r HUD |
 | `F10` | Open edit mode and settings |
 
-While edit mode is active, HUD blocks can be dragged and resized directly on screen.
+While edit mode is active, HUD blocks can be dragged and resized directly on screen. Gameplay mouse-look is suppressed while the editor is open.
 
 ---
 
@@ -268,14 +321,12 @@ dist/
 
 Planned ideas for future versions:
 
-- context widgets for ships;
-- in-game day / time information;
-- sunrise and sunset indicators;
 - theme system;
 - built-in Valheim-style theme;
 - custom HUD colors;
 - user-created themes;
 - more languages;
+- optional low-durability / production-ready notifications;
 - more contextual world information where the client exposes reliable data.
 
 The goal is to keep every major module optional so the HUD can stay as simple or as detailed as the player wants.
